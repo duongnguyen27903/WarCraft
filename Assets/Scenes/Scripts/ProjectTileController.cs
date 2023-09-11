@@ -20,9 +20,9 @@ namespace Section3
             transform.Translate(Direction * Time.deltaTime * MoveSpeed);
         }
 
-        public void Fire()
+        public void Fire(float destroy_time)
         {
-            Destroy(gameObject, 3f);
+            Destroy(gameObject, destroy_time);
         }
     }
 

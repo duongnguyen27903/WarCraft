@@ -27,10 +27,11 @@ Transform:
   m_GameObject: {fileID: 2595539381007081327}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.70785874, w: 0.706354}
-  m_LocalPosition: {x: -0.057368048, y: 4.195004, z: -0.038541548}
+  m_LocalPosition: {x: -0.295, y: 4.212, z: -0.038541548}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4387449922566978834}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5080128698729761850
@@ -104,3 +105,37 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ProjectTile: {fileID: 1533822966267441345, guid: a93d40050d1127d46b7cef0f35d540b9, type: 3}
+  FiringPoint: {fileID: 4387449922566978834}
+  FiringCooldown: 2
+--- !u!1 &9172996458325967659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4387449922566978834}
+  m_Layer: 0
+  m_Name: FiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4387449922566978834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9172996458325967659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.047, y: -0.523, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2960871337538760115}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

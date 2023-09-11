@@ -8,6 +8,11 @@ namespace Section3
     {
         [SerializeField] private float MoveSpeed;
         [SerializeField] private Transform[] WayPoint;
+        [SerializeField] private ProjectTileController ProjectTile;
+        [SerializeField] private Transform FiringPoint;
+        [SerializeField] private float FiringCooldown;
+
+        private float TempCooldown;
 
         private int CurrentWayPointIndex;
         private bool active;
@@ -37,6 +42,20 @@ namespace Section3
             Vector3 direction = WayPoint[nextWayPoint].position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+            
+            //firing
+            if (TempCooldown <= 0)
+            {
+                Fire();
+                TempCooldown = FiringCooldown;
+            }
+            TempCooldown -= Time.deltaTime;
+        }
+
+        private void Fire()
+        {
+            ProjectTileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
+            projectTile.Fire(10f);
         }
 
         public void Init(Transform[] way_point)
@@ -44,6 +63,7 @@ namespace Section3
             WayPoint = way_point;
             active = true;
             transform.position = way_point[0].position;
+            TempCooldown = FiringCooldown;
         }
     }
 

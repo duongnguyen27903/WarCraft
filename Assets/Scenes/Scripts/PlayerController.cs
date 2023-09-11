@@ -40,7 +40,7 @@ namespace Section3
         private void Fire()
         {
             ProjectTileController projectTile =  Instantiate(ProjectTile, FiringPoint.position,Quaternion.identity,null);
-            projectTile.Fire();
+            projectTile.Fire(3f);
         }
     }
 
