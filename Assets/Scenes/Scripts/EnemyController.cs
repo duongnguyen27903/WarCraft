@@ -10,7 +10,8 @@ namespace Section3
         [SerializeField] private Transform[] WayPoint;
         [SerializeField] private ProjectTileController ProjectTile;
         [SerializeField] private Transform FiringPoint;
-        [SerializeField] private float FiringCooldown;
+        [SerializeField] private float MinFiringCooldown;
+        [SerializeField] private float MaxFiringCooldown;
 
         private float TempCooldown;
 
@@ -47,7 +48,7 @@ namespace Section3
             if (TempCooldown <= 0)
             {
                 Fire();
-                TempCooldown = FiringCooldown;
+                TempCooldown = Random.Range(MinFiringCooldown,MaxFiringCooldown);
             }
             TempCooldown -= Time.deltaTime;
         }
@@ -57,13 +58,12 @@ namespace Section3
             ProjectTileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
             projectTile.Fire(10f);
         }
-
         public void Init(Transform[] way_point)
         {
             WayPoint = way_point;
             active = true;
             transform.position = way_point[0].position;
-            TempCooldown = FiringCooldown;
+            TempCooldown = Random.Range(MinFiringCooldown, MaxFiringCooldown);
         }
     }
 

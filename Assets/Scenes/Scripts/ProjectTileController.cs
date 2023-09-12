@@ -24,6 +24,18 @@ namespace Section3
         {
             Destroy(gameObject, destroy_time);
         }
+
+        // function make physic collision
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            Debug.Log(collision.gameObject.name);
+        }
+
+        //function check trigger collision
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Debug.Log("Trigger" + collision.gameObject.name);
+        }
     }
 
 }
