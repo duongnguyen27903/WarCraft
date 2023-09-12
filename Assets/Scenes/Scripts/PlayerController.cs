@@ -10,12 +10,14 @@ namespace Section3
         [SerializeField] private ProjectTileController ProjectTile;
         [SerializeField] private Transform FiringPoint;
         [SerializeField] private float FiringCooldown;
+        [SerializeField] private int Hp;
 
+        private int current_hp;
         private float TempCooldown;
         // Start is called before the first frame update
         void Start()
         {
-
+            current_hp = Hp;
         }
 
         // Update is called once per frame
@@ -36,11 +38,18 @@ namespace Section3
                 TempCooldown -= Time.deltaTime;
             }
         }
-
         private void Fire()
         {
             ProjectTileController projectTile =  Instantiate(ProjectTile, FiringPoint.position,Quaternion.identity,null);
             projectTile.Fire(3f);
+        }
+        public void Hit(int damage)
+        {
+            current_hp -= damage;
+            if (current_hp <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

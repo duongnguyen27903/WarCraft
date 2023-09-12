@@ -12,11 +12,13 @@ namespace Section3
         [SerializeField] private Transform FiringPoint;
         [SerializeField] private float MinFiringCooldown;
         [SerializeField] private float MaxFiringCooldown;
+        [SerializeField] private int Hp;
 
+        private int current_hp;
         private float TempCooldown;
-
         private int CurrentWayPointIndex;
         private bool active;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -64,6 +66,15 @@ namespace Section3
             active = true;
             transform.position = way_point[0].position;
             TempCooldown = Random.Range(MinFiringCooldown, MaxFiringCooldown);
+            current_hp = Hp;
+        }
+        public void Hit( int damage )
+        {
+            current_hp -= damage;
+            if( current_hp <= 0 )
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

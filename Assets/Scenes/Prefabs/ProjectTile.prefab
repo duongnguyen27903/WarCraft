@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 20
   Direction: {x: 0, y: 1}
+  Damage: 1
 --- !u!50 &1216778886132424402
 Rigidbody2D:
   serializedVersion: 4
