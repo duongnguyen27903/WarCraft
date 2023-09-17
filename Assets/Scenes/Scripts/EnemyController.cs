@@ -18,11 +18,12 @@ namespace Section3
         private float TempCooldown;
         private int CurrentWayPointIndex;
         private bool active;
+        private SpawnManager spawnManager;
 
         // Start is called before the first frame update
         void Start()
         {
-
+            spawnManager = FindObjectOfType<SpawnManager>();
         }
 
         // Update is called once per frame
@@ -57,8 +58,9 @@ namespace Section3
 
         private void Fire()
         {
-            ProjectTileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
-            projectTile.Fire(10f);
+            //ProjectTileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
+            ProjectTileController projectile = spawnManager.SpawnEnemyProjectile(FiringPoint.position);
+            projectile.Fire();
         }
         public void Init(Transform[] way_point)
         {
@@ -73,7 +75,8 @@ namespace Section3
             current_hp -= damage;
             if( current_hp <= 0 )
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                spawnManager.ReleaseEnemy(this);
             }
         }
     }

@@ -9,21 +9,46 @@ namespace Section3
         [SerializeField] private float MoveSpeed;
         [SerializeField] private Vector2 Direction;
         [SerializeField] private int Damage;
+
+        private bool from_player;
+        private SpawnManager spawnManager;
+        private float life_time;
         // Start is called before the first frame update
         void Start()
         {
-
+            spawnManager = FindObjectOfType<SpawnManager>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            transform.Translate(Direction * Time.deltaTime * MoveSpeed);
+            transform.Translate(MoveSpeed * Time.deltaTime * Direction);
+            if( life_time <= 0 )
+            {
+                Release();
+            }
+            life_time -= Time.deltaTime;
+        }
+        public void SetFromPlayer(bool value)
+        {
+            from_player = value;
         }
 
-        public void Fire(float destroy_time)
+        public void Fire()
         {
-            Destroy(gameObject, destroy_time);
+            if (from_player)
+            {
+                life_time = 3f;
+            }
+            else life_time = 10f;
+        }
+
+        private void Release()
+        {
+            if (from_player)
+                spawnManager.ReleasePlayerProjectile(this);
+            else 
+                spawnManager.ReleaseEnemyProjectile(this);
         }
 
         // function make physic collision
@@ -38,16 +63,14 @@ namespace Section3
             Debug.Log("Trigger" + collision.gameObject.name);
             if(collision.gameObject.CompareTag("Enemy"))
             {
-                Destroy(gameObject);
-                EnemyController enemy;
-                collision.gameObject.TryGetComponent(out enemy);
+                Release();
+                collision.gameObject.TryGetComponent(out EnemyController enemy);
                 enemy.Hit(Damage);
             }
             if (collision.gameObject.CompareTag("Player"))
             {
-                Destroy(gameObject);
-                PlayerController player;
-                collision.gameObject.TryGetComponent(out player);
+                Release();
+                collision.gameObject.TryGetComponent(out PlayerController player);
                 player.Hit(Damage);
             }
         }

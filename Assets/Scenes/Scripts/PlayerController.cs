@@ -14,10 +14,12 @@ namespace Section3
 
         private int current_hp;
         private float TempCooldown;
+        private SpawnManager spawnManager;
         // Start is called before the first frame update
         void Start()
         {
             current_hp = Hp;
+            spawnManager = FindObjectOfType<SpawnManager>();
         }
 
         // Update is called once per frame
@@ -25,8 +27,8 @@ namespace Section3
         {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
-            Vector2 direction = new Vector2(horizontal, vertical);
-            transform.Translate(direction * Time.deltaTime * MoveSpeed);
+            Vector2 direction = new(horizontal, vertical);
+            transform.Translate(MoveSpeed * Time.deltaTime * direction);
 
             if( Input.GetKey(KeyCode.Space) )
             {
@@ -40,15 +42,17 @@ namespace Section3
         }
         private void Fire()
         {
-            ProjectTileController projectTile =  Instantiate(ProjectTile, FiringPoint.position,Quaternion.identity,null);
-            projectTile.Fire(3f);
+            //ProjectTileController projectTile =  Instantiate(ProjectTile, FiringPoint.position,Quaternion.identity,null);
+            ProjectTileController projectile = spawnManager.SpawnPlayerProjectile(FiringPoint.position);
+            projectile.Fire();
         }
         public void Hit(int damage)
         {
             current_hp -= damage;
             if (current_hp <= 0)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

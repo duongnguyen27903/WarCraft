@@ -103,7 +103,7 @@ MonoBehaviour:
   MoveSpeed: 10
   ProjectTile: {fileID: 1738983562311119992, guid: ef078b0f5a47c7444b6281211248ae5a, type: 3}
   FiringPoint: {fileID: 29875111271548368}
-  FiringCooldown: 0.1
+  FiringCooldown: 0.2
   Hp: 10
 --- !u!58 &278115462227036836
 CircleCollider2D:
