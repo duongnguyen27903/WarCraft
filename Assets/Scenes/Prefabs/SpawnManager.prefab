@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4502798551146066583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2030029212990631196}
+  - component: {fileID: 2083448401495755912}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2030029212990631196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502798551146066583}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1379169, y: 2.1902277, z: -0.041632447}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2083448401495755912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502798551146066583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae3ead72db19e3f4298cedb823704fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemiesPool:
+    prefab: {fileID: 6129255231035940239, guid: 678e9e0719ace11418fd06866fa58b76, type: 3}
+  EnemyProjectilePool:
+    prefab: {fileID: 1533822966267441345, guid: a93d40050d1127d46b7cef0f35d540b9, type: 3}
+  PlayerProjectilePool:
+    prefab: {fileID: 1738983562311119992, guid: ef078b0f5a47c7444b6281211248ae5a, type: 3}
+  active: 0
+  MinTotalEnemy: 4
+  MaxTotalEnemy: 6
+  SpawnInterval: 2
+  Path:
+  - {fileID: 7034154243793681252, guid: d50d2cfdb6f4e684383db3c08faa41c6, type: 3}
+  - {fileID: 3839424811111251612, guid: d4272a498ad5d494cbb7ae720683823a, type: 3}
+  - {fileID: 6558699067879551698, guid: 83fde86376b516b45a608df1bcaae58e, type: 3}
+  - {fileID: 207084048598383740, guid: 80f63c54929c8ce4988eb64f43c4c4bb, type: 3}
+  TotalGroups: 4

@@ -25,7 +25,7 @@ namespace Section3
                     Transform to = WayPoint[i+1];
                     Gizmos.DrawLine(from.position , to.position);
                 }
-                Gizmos.DrawLine(WayPoint[0].position , WayPoint[WayPoint.Length-1].position);
+                Gizmos.DrawLine(WayPoint[0].position , WayPoint[^1].position);
             }
 
         }

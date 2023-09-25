@@ -7,7 +7,7 @@ namespace Section3
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float MoveSpeed;
-        [SerializeField] private ProjectTileController ProjectTile;
+        [SerializeField] private ProjectileController ProjectTile;
         [SerializeField] private Transform FiringPoint;
         [SerializeField] private float FiringCooldown;
         [SerializeField] private int Hp;
@@ -15,6 +15,7 @@ namespace Section3
         private int current_hp;
         private float TempCooldown;
         private SpawnManager spawnManager;
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -30,9 +31,9 @@ namespace Section3
             Vector2 direction = new(horizontal, vertical);
             transform.Translate(MoveSpeed * Time.deltaTime * direction);
 
-            if( Input.GetKey(KeyCode.Space) )
+            if (Input.GetKey(KeyCode.Space))
             {
-                if( TempCooldown <=0 )
+                if (TempCooldown <= 0)
                 {
                     Fire();
                     TempCooldown = FiringCooldown;
@@ -42,8 +43,8 @@ namespace Section3
         }
         private void Fire()
         {
-            //ProjectTileController projectTile =  Instantiate(ProjectTile, FiringPoint.position,Quaternion.identity,null);
-            ProjectTileController projectile = spawnManager.SpawnPlayerProjectile(FiringPoint.position);
+            //ProjectileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
+            ProjectileController projectile = spawnManager.SpawnProjectilePlayer(FiringPoint.position);
             projectile.Fire();
         }
         public void Hit(int damage)
@@ -51,10 +52,11 @@ namespace Section3
             current_hp -= damage;
             if (current_hp <= 0)
             {
-                //Destroy(gameObject);
-                gameObject.SetActive(false);
+                Destroy(gameObject);
             }
         }
+
+        
     }
 
 }
