@@ -4938,8 +4938,8 @@ MonoBehaviour:
   - {fileID: 0}
   ProjectTile: {fileID: 1533822966267441345, guid: a93d40050d1127d46b7cef0f35d540b9, type: 3}
   FiringPoint: {fileID: 4387449922566978834}
-  MinFiringCooldown: 4
-  MaxFiringCooldown: 8
+  MinFiringCooldown: 2
+  MaxFiringCooldown: 4
   Hp: 3
 --- !u!50 &3655613860157334937
 Rigidbody2D:

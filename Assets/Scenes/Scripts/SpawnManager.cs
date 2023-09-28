@@ -41,48 +41,10 @@ namespace Section3
         }
     }
 
-    [System.Serializable]
-    public class ProjectilePool
-    {
-        public ProjectileController prefab;
-        public List<ProjectileController> inactiveObjs;
-        public List<ProjectileController> activeObjs;
-
-        public ProjectileController SpawnProjectile(Vector3 position,Transform parent)
-        {
-            if( inactiveObjs.Count == 0)
-            {
-                ProjectileController newBullet = ProjectileController.Instantiate(prefab, parent);
-                newBullet.gameObject.transform.position=position;
-                activeObjs.Add(newBullet);
-                return newBullet;
-            }
-            else
-            {
-                ProjectileController oldBullet = inactiveObjs[0];
-                oldBullet.gameObject.transform.SetParent(parent);
-                oldBullet.gameObject.transform.position = position;
-                oldBullet.gameObject.SetActive(true);
-                activeObjs.Add(oldBullet);
-                inactiveObjs.RemoveAt(0);
-                return oldBullet;
-            }
-        }
-
-        public void ReleaseProjectile(ProjectileController projectile)
-        {
-            projectile.gameObject.SetActive(false);
-            inactiveObjs.Add(projectile);
-            activeObjs.Remove(projectile);
-        }
-    }
-
     public class SpawnManager : MonoBehaviour
     {
         //[SerializeField] private EnemyController EnemyPrefabs;
         [SerializeField] private EnemyPool EnemiesPool;
-        [SerializeField] private ProjectilePool EnemyProjectilePool;
-        [SerializeField] private ProjectilePool PlayerProjectilePool;
         [SerializeField] private bool active;
         [SerializeField] private int MinTotalEnemy;
         [SerializeField] private int MaxTotalEnemy;
@@ -98,7 +60,7 @@ namespace Section3
         // Update is called once per frame
         void Update()
         {
-            
+
         }
 
         private IEnumerator IESpawnGroup(int groups)
@@ -129,30 +91,5 @@ namespace Section3
         {
             EnemiesPool.ReleaseEnemy(obj);
         }
-
-        public ProjectileController SpawnProjectilePlayer( Vector3 position )
-        {
-            ProjectileController player = PlayerProjectilePool.SpawnProjectile(position, transform);
-            player.SetFromPlayer(true);
-            return player;
-        }
-
-        public void ReleasePlayerProjectile(ProjectileController obj)
-        {
-            PlayerProjectilePool.ReleaseProjectile(obj);
-        }
-
-        public ProjectileController SpawnProjectileEnemy( Vector3 position ) 
-        {
-            ProjectileController enemy = EnemyProjectilePool.SpawnProjectile(position, transform);
-            enemy.SetFromPlayer(false);
-            return enemy;
-        }
-
-        public void ReleaseEnemyProjectile(ProjectileController obj)
-        {
-            EnemyProjectilePool.ReleaseProjectile(obj);
-        }
     }
-
 }

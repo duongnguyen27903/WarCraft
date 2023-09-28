@@ -14,13 +14,11 @@ namespace Section3
 
         private int current_hp;
         private float TempCooldown;
-        private SpawnManager spawnManager;
         
         // Start is called before the first frame update
         void Start()
         {
             current_hp = Hp;
-            spawnManager = FindObjectOfType<SpawnManager>();
         }
 
         // Update is called once per frame
@@ -43,9 +41,15 @@ namespace Section3
         }
         private void Fire()
         {
-            //ProjectileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
-            ProjectileController projectile = spawnManager.SpawnProjectilePlayer(FiringPoint.position);
-            projectile.Fire();
+            //ProjectileController projectile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
+            //projectile.Fire();
+
+            GameObject bullet = ObjectPool.instance.PlayerFiring();
+            if( bullet != null)
+            {
+                bullet.transform.position = FiringPoint.position;
+                bullet.SetActive(true);
+            }
         }
         public void Hit(int damage)
         {

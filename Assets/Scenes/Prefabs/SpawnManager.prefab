@@ -46,10 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemiesPool:
     prefab: {fileID: 6129255231035940239, guid: 678e9e0719ace11418fd06866fa58b76, type: 3}
-  EnemyProjectilePool:
-    prefab: {fileID: 1533822966267441345, guid: a93d40050d1127d46b7cef0f35d540b9, type: 3}
-  PlayerProjectilePool:
-    prefab: {fileID: 1738983562311119992, guid: ef078b0f5a47c7444b6281211248ae5a, type: 3}
+    activeObjs: []
+    inactiveObjs: []
   active: 0
   MinTotalEnemy: 4
   MaxTotalEnemy: 6

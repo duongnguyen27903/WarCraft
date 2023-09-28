@@ -25,7 +25,6 @@ namespace Section3
         {
             spawnManager = FindObjectOfType<SpawnManager>();
         }
-
         // Update is called once per frame
         void Update()
         {
@@ -58,9 +57,14 @@ namespace Section3
 
         private void Fire()
         {
-            //ProjectileController projectTile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
-            ProjectileController projectile = spawnManager.SpawnProjectileEnemy(FiringPoint.position);
-            projectile.Fire();
+            //ProjectileController projectile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
+
+            GameObject obj = ObjectPool.instance.EnemyFiring();
+            if (obj != null)
+            {
+                obj.transform.position = FiringPoint.position;
+                obj.SetActive(true);
+            }
         }
         public void Init(Transform[] way_point)
         {

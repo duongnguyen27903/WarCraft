@@ -10,30 +10,28 @@ namespace Section3
         [SerializeField] private Vector2 Direction;
         [SerializeField] private int Damage;
 
-        private bool is_from_player;
-        private SpawnManager spawnManager;
         private float life_time;
-        // Start is called before the first frame update
-        void Start()
-        {
-            spawnManager = FindObjectOfType<SpawnManager>();
-        }
 
-        // Update is called once per frame
+        void OnEnable()
+        {
+            if( gameObject.layer == 8 )
+            {
+                life_time = 1f;
+            }
+            else if( gameObject.layer == 9 )
+            {
+                life_time = 10f;
+            }
+        }
         void Update()
         {
             transform.Translate(MoveSpeed * Time.deltaTime * Direction);
-            if( life_time <= 0)
+            if (life_time <= 0)
             {
-                Release();
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
             }
             life_time -= Time.deltaTime;
-        }
-
-        public void Fire()
-        {
-            //Destroy(gameObject, destroy_time);
-            life_time = 5f;
         }
 
         // function make physic collision
@@ -48,32 +46,17 @@ namespace Section3
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 //Destroy(gameObject);
-                Release();
+                gameObject.SetActive(false);
                 collision.gameObject.TryGetComponent(out EnemyController enemy);
                 enemy.Hit(Damage);
             }
             if (collision.gameObject.CompareTag("Player"))
             {
                 //Destroy(gameObject);
-                Release();
+                gameObject.SetActive(false);
                 collision.gameObject.TryGetComponent(out PlayerController player);
                 player.Hit(Damage);
             }
         }
-
-        public void SetFromPlayer(bool value)
-        {
-           is_from_player = value;
-        }
-
-        private void Release()
-        {
-            if(is_from_player)
-            {
-                spawnManager.ReleasePlayerProjectile(this);
-            }
-            else spawnManager.ReleaseEnemyProjectile(this);
-        }
     }
-
 }

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 2
   Direction: {x: 0, y: -1}
-  Damage: 2
+  Damage: 1
 --- !u!58 &-477843207280037125
 CircleCollider2D:
   m_ObjectHideFlags: 0
