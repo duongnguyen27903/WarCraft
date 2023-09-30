@@ -50,12 +50,28 @@ namespace Section3
                 bullet.transform.position = FiringPoint.position;
                 bullet.SetActive(true);
             }
+
+            GameObject shootFX = ParticleFXPool.instance.GetShootingFX();
+            if( shootFX != null )
+            {
+                shootFX.transform.position = FiringPoint.position;
+                shootFX.SetActive(true);
+            }
         }
         public void Hit(int damage)
         {
             current_hp -= damage;
+            GameObject hitFX = ParticleFXPool.instance.GetHitFX();
+            if( hitFX != null )
+            {
+                hitFX.transform.position = this.transform.position;
+                hitFX.SetActive(true);
+            }
             if (current_hp <= 0)
             {
+                GameObject expolsionFX = ParticleFXPool.instance.GetExplosionFX();
+                expolsionFX.transform.position = gameObject.transform.position;
+                expolsionFX.SetActive(true);
                 Destroy(gameObject);
             }
         }

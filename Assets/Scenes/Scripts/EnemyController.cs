@@ -77,9 +77,18 @@ namespace Section3
         public void Hit(int damage)
         {
             current_hp -= damage;
+            GameObject hitFX = ParticleFXPool.instance.GetHitFX();
+            if (hitFX != null)
+            {
+                hitFX.transform.position = gameObject.transform.position;
+                hitFX.SetActive(true);
+            }
             if (current_hp <= 0)
             {
                 //Destroy(gameObject);
+                GameObject explosionFX = ParticleFXPool.instance.GetExplosionFX();
+                explosionFX.transform.position = gameObject.transform.position;
+                explosionFX.SetActive(true);
                 spawnManager.ReleaseEnemies(this);
             }
         }
