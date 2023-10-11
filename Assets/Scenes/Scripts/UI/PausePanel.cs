@@ -1,18 +1,22 @@
+using Section3;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PausePanel : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private GameManager gameManager;
     void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BtnPlay_Pressed()
     {
-        
+        gameManager.Btn_Play_Pressed();
+    }
+    public void BtnHome_Pressed()
+    {
+        gameManager.Btn_Home_Pressed();
     }
 }

@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: -1.1379169, y: 2.1902277, z: -0.041632447}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7226497506910800609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2083448401495755912
@@ -44,10 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae3ead72db19e3f4298cedb823704fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemiesPool:
-    prefab: {fileID: 6129255231035940239, guid: 678e9e0719ace11418fd06866fa58b76, type: 3}
-    activeObjs: []
-    inactiveObjs: []
   active: 0
   MinTotalEnemy: 4
   MaxTotalEnemy: 6
@@ -58,3 +55,49 @@ MonoBehaviour:
   - {fileID: 6558699067879551698, guid: 83fde86376b516b45a608df1bcaae58e, type: 3}
   - {fileID: 207084048598383740, guid: 80f63c54929c8ce4988eb64f43c4c4bb, type: 3}
   TotalGroups: 4
+--- !u!1 &6162094462272939867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7226497506910800609}
+  - component: {fileID: 1268009755496221104}
+  m_Layer: 0
+  m_Name: EnemyPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7226497506910800609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162094462272939867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2030029212990631196}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1268009755496221104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162094462272939867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0137dc319579896479a0281c59d4946a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemies_Pool: []
+  Enemies_prefab: {fileID: 6129255231035940239, guid: 678e9e0719ace11418fd06866fa58b76, type: 3}

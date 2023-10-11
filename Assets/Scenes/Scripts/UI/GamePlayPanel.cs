@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GamePlayPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private TextMeshProUGUI Score;
+    private GameManager gameManager;
     void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Pause_Pressed()
     {
-        
+        gameManager.Btn_Pause_Pressed();
     }
+    public void DisplayScore(int score)
+    {
+        Score.text = $"Score : {score}";
+    }
+    
 }

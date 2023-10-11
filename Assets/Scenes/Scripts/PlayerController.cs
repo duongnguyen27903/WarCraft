@@ -14,11 +14,16 @@ namespace Section3
 
         private int current_hp;
         private float TempCooldown;
+
+        private GameManager gameManager;
+        private SpawnManager spawnManager;
         
         // Start is called before the first frame update
         void Start()
         {
             current_hp = Hp;
+            gameManager = FindObjectOfType<GameManager>();
+            spawnManager = FindAnyObjectByType<SpawnManager>();
         }
 
         // Update is called once per frame
@@ -73,6 +78,8 @@ namespace Section3
                 expolsionFX.transform.position = gameObject.transform.position;
                 expolsionFX.SetActive(true);
                 Destroy(gameObject);
+                gameManager.Set_Game_State(GameManager.GameState.GameOver);
+                Time.timeScale = 0;
             }
         }
 

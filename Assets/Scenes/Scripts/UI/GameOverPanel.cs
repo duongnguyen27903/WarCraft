@@ -1,18 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private TextMeshProUGUI HighScore;
+    [SerializeField] private TextMeshProUGUI Result;
+
+    private GameManager gameManager;
     void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DisplayHighScore(int score)
     {
-        
+        HighScore.text = $"HighScore : {score}";
+    }
+
+    public void BtnHome_Pressed()
+    {
+        gameManager.Btn_Home_Pressed();
+    }
+
+    public void DisplayResult(bool win)
+    {
+        if (win)
+        {
+            Result.text = "WIN";
+        }
+        else Result.text = "LOSE";
     }
 }

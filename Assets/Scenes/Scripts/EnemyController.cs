@@ -19,13 +19,14 @@ namespace Section3
         private int CurrentWayPointIndex;
         private bool active;
         private SpawnManager spawnManager;
+        private GameManager gameManager;
 
-        // Start is called before the first frame update
         void Start()
         {
             spawnManager = FindObjectOfType<SpawnManager>();
+            gameManager = FindObjectOfType<GameManager>();
         }
-        // Update is called once per frame
+        
         void Update()
         {
             if (!active)
@@ -90,6 +91,7 @@ namespace Section3
                 explosionFX.transform.position = gameObject.transform.position;
                 explosionFX.SetActive(true);
                 spawnManager.ReleaseEnemies(this);
+                gameManager.AddScore(1);
             }
         }
     }

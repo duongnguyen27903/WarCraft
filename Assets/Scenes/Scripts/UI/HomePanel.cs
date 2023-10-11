@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using Section3;
 using UnityEngine;
 
 public class HomePanel : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private GameManager gameManager;
+    private SpawnManager spawnManager;
     void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
+        //spawnManager = FindObjectOfType<SpawnManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Play_Pressed()
     {
-        
+       gameManager.Btn_Play_Pressed();
+       //spawnManager.Activate();
     }
 }
