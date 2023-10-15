@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private bool Win;
     private int Score;
     private SpawnManager spawnManager;
+    private AudioManager audioManager;
     public enum GameState
     {
         Home,
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         spawnManager = FindObjectOfType<SpawnManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         HomePanel.gameObject.SetActive(false);
         GamePlayPanel.gameObject.SetActive(false);
         GamePausePanel.gameObject.SetActive(false);
@@ -43,6 +45,17 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
         }
         else Time.timeScale = 1f;
+
+        if( game_state == GameState.Home)
+        {
+            audioManager.PlayHomeMusic();
+        }
+        else audioManager.PlayBattleMusic();
+    }
+
+    public bool CanMove()
+    {
+        return game_state == GameState.GamePlay;
     }
 
     public void Btn_Pause_Pressed()
@@ -54,6 +67,7 @@ public class GameManager : MonoBehaviour
     {
         Set_Game_State(GameState.GamePlay);
         spawnManager.StartBattle();
+        spawnManager.Create_Player();
         Score = 0;
         GamePlayPanel.DisplayScore(Score);
     }
@@ -61,6 +75,8 @@ public class GameManager : MonoBehaviour
     public void Btn_Home_Pressed()
     {
         Set_Game_State(GameState.Home);
+        spawnManager.Clear();
+        spawnManager.Destroy_Player();
     }
 
     public void GameOver( bool win)
