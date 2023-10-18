@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip HomeMusic;
     [SerializeField] private AudioClip BattleMusic;
 
+    [SerializeField] private AudioSource Echo;
+
     [SerializeField] private AudioSource SFX;
     [SerializeField] private AudioClip LaserSFX;
     [SerializeField] private AudioClip PlasmaSFX;
@@ -52,7 +54,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayExplosionSFX()
     {
-        SFX.pitch = Random.Range(1f, 2f);
-        SFX.PlayOneShot(ExplosionSFX);
+        Echo.pitch = Random.Range(1f, 2f);
+        Echo.PlayOneShot(ExplosionSFX);
     }
 }

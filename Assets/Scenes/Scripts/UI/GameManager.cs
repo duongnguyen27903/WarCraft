@@ -1,11 +1,23 @@
 using Section3;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager Instance;
+    public static GameManager instance
+    {
+        get
+        {
+            if( Instance == null)
+            {
+                Instance = FindObjectOfType<GameManager>();
+            }
+            return Instance;
+        }
+    }
+    public Action<int> onScoreChanged;
+
     [SerializeField] private HomePanel HomePanel;
     [SerializeField] private GamePlayPanel GamePlayPanel;
     [SerializeField] private PausePanel GamePausePanel;
@@ -21,6 +33,18 @@ public class GameManager : MonoBehaviour
         GamePlay,
         GamePause,
         GameOver
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(Instance);
+        }
     }
     void Start()
     {
@@ -39,8 +63,7 @@ public class GameManager : MonoBehaviour
         GamePlayPanel.gameObject.SetActive( game_state == GameState.GamePlay);
         GamePausePanel.gameObject.SetActive( game_state == GameState.GamePause);
         GameOverPanel.gameObject.SetActive(game_state == GameState.GameOver);
-
-        if( game_state == GameState.GamePause)
+        if ( game_state == GameState.GamePause)
         {
             Time.timeScale = 0;
         }
@@ -58,18 +81,19 @@ public class GameManager : MonoBehaviour
         return game_state == GameState.GamePlay;
     }
 
-    public void Btn_Pause_Pressed()
-    {
-        Set_Game_State(GameState.GamePause);
-    }
-
     public void Btn_Play_Pressed()
     {
-        Set_Game_State(GameState.GamePlay);
-        spawnManager.StartBattle();
         spawnManager.Create_Player();
+        spawnManager.StartBattle();
+        Set_Game_State(GameState.GamePlay);
+        
         Score = 0;
-        GamePlayPanel.DisplayScore(Score);
+        if( onScoreChanged != null )
+        {
+            onScoreChanged(Score);
+        }
+        //GamePlayPanel.DisplayScore(Score);
+        
     }
 
     public void Btn_Home_Pressed()
@@ -77,6 +101,10 @@ public class GameManager : MonoBehaviour
         Set_Game_State(GameState.Home);
         spawnManager.Clear();
         spawnManager.Destroy_Player();
+    }
+    public void Btn_Pause_Pressed()
+    {
+        Set_Game_State(GameState.GamePause);
     }
 
     public void GameOver( bool win)
@@ -90,7 +118,11 @@ public class GameManager : MonoBehaviour
     public void AddScore( int value)
     {
         Score += value;
-        GamePlayPanel.DisplayScore(Score);
+        if( onScoreChanged!= null )
+        {
+            onScoreChanged(Score);
+        }
+        //GamePlayPanel.DisplayScore(Score);
         if( spawnManager.IsClear())
         {
             GameOver(true);

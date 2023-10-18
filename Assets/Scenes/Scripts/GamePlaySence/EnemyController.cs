@@ -95,7 +95,7 @@ namespace Section3
                 explosionFX.transform.position = gameObject.transform.position;
                 explosionFX.SetActive(true);
                 spawnManager.ReleaseEnemies(this);
-                gameManager.AddScore(1);
+                GameManager.instance.AddScore(1);
                 audioManager.PlayExplosionSFX();
             }
         }

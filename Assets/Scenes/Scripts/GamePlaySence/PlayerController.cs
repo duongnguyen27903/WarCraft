@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace Section3
 {
     public class PlayerController : MonoBehaviour
     {
+        public Action<int, int> onHpChanged;
+
         [SerializeField] private float MoveSpeed;
         [SerializeField] private ProjectileController ProjectTile;
         [SerializeField] private Transform FiringPoint;
@@ -22,6 +25,10 @@ namespace Section3
         void Start()
         {
             current_hp = Hp;
+            if( onHpChanged != null)
+            {
+                onHpChanged(current_hp, Hp);
+            }
             gameManager = FindObjectOfType<GameManager>();
             audioManager = FindObjectOfType<AudioManager>();
         }
@@ -71,6 +78,10 @@ namespace Section3
         public void Hit(int damage)
         {
             current_hp -= damage;
+            if( onHpChanged != null)
+            {
+                onHpChanged(current_hp, Hp);
+            }
             audioManager.PlayHitSFX();
             GameObject hitFX = ParticleFXPool.instance.GetHitFX();
             if( hitFX != null )

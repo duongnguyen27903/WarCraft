@@ -9,6 +9,18 @@ namespace Section3
 {
     public class SpawnManager : MonoBehaviour
     {
+        private static SpawnManager Instance;
+        public static SpawnManager instance
+        {
+            get
+            {
+                if( Instance == null)
+                {
+                    Instance = FindObjectOfType<SpawnManager>();
+                }
+                return Instance;
+            }
+        }
         //[SerializeField] private EnemyController EnemyPrefabs;
         //[SerializeField] private EnemyPool EnemiesPool;
         [SerializeField] private PlayerController player_prefab;
@@ -25,6 +37,20 @@ namespace Section3
         private bool IsSpawning;
         private PlayerController player;
 
+        public PlayerController Player => player;
+
+        private void Awake()
+        {
+            if( Instance == null)
+            {
+                Instance = this;
+            }
+            else if( Instance != this )
+            {
+                Destroy(gameObject);
+            }
+        }
+
         private void Start()
         {
             enemies_pool = FindObjectOfType<EnemyPool>();
@@ -33,6 +59,9 @@ namespace Section3
         }
         public void StartBattle()
         {
+            if( player == null)
+                player = Instantiate(player_prefab);
+            player.transform.position = Vector2.zero;
             StartCoroutine(IESpawnGroup(TotalGroups));
         }
         private IEnumerator IESpawnGroup(int groups)
@@ -82,8 +111,7 @@ namespace Section3
 
         public void Create_Player()
         {
-            player = Instantiate(player_prefab);
-            player.transform.position = Vector2.zero;
+            
         }
         public void Destroy_Player()
         {
