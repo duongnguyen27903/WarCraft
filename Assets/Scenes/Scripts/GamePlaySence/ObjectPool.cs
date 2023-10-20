@@ -6,10 +6,10 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool instance;
     private readonly List<GameObject> PlayerProjectilePool = new();
-    private readonly List<GameObject> EnemyProjectilePool = new();
+    private readonly List<ProjectileController> EnemyProjectilePool = new();
     private readonly int amountToPool = 20;
     [SerializeField] private GameObject PlayerProjectile;
-    [SerializeField] private GameObject EnemyProjectile;
+    [SerializeField] private ProjectileController EnemyProjectile;
 
     private SpawnManager spawnManager;
 
@@ -29,10 +29,6 @@ public class ObjectPool : MonoBehaviour
             player_bullet.transform.SetParent(spawnManager.transform);
             player_bullet.SetActive(false);
             PlayerProjectilePool.Add(player_bullet);
-            GameObject enemy_bullet = Instantiate(EnemyProjectile);
-            enemy_bullet.transform.SetParent(spawnManager.transform);
-            enemy_bullet.SetActive(false);
-            EnemyProjectilePool.Add(enemy_bullet);
         }
         
     }
@@ -48,16 +44,21 @@ public class ObjectPool : MonoBehaviour
         return null;
     }
 
-    public GameObject EnemyFiring()
+    public ProjectileController EnemyFiring()
     {
         for( int i = 0; i < EnemyProjectilePool.Count; i++)
         {
-            if(EnemyProjectilePool[i].activeInHierarchy == false )
+            if(EnemyProjectilePool[i].gameObject.activeInHierarchy == false )
             {
                 return EnemyProjectilePool[i];
             }
         }
-        return null;
+        ProjectileController enemy_bullet = Instantiate(EnemyProjectile);
+        enemy_bullet.transform.SetParent(spawnManager.transform);
+        enemy_bullet.gameObject.SetActive(false);
+        EnemyProjectilePool.Add(enemy_bullet);
+        return enemy_bullet;
+
     }
 
     public void ClearProjectile()
@@ -68,7 +69,7 @@ public class ObjectPool : MonoBehaviour
         }
         for( int i = 0; i<EnemyProjectilePool.Count; i++)
         {
-            EnemyProjectilePool[i].SetActive(false);
+            EnemyProjectilePool[i].gameObject.SetActive(false);
         }
     }
 }

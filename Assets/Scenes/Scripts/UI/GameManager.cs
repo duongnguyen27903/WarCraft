@@ -22,6 +22,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GamePlayPanel GamePlayPanel;
     [SerializeField] private PausePanel GamePausePanel;
     [SerializeField] private GameOverPanel GameOverPanel;
+    [SerializeField] private WavesData[] Waves;
+
+    private int current_waves;
+    public int Current_Wave
+    {
+        get { return current_waves; }
+    }
+    public WavesData[] Get_Waves => Waves;
     private GameState game_state;
     private bool Win;
     private int Score;
@@ -83,8 +91,9 @@ public class GameManager : MonoBehaviour
 
     public void Btn_Play_Pressed()
     {
-        spawnManager.Create_Player();
-        spawnManager.StartBattle();
+        current_waves = 0;
+        WavesData waves = Waves[current_waves];
+        spawnManager.StartBattle(waves);
         Set_Game_State(GameState.GamePlay);
         
         Score = 0;
@@ -99,6 +108,7 @@ public class GameManager : MonoBehaviour
     public void Btn_Home_Pressed()
     {
         Set_Game_State(GameState.Home);
+        current_waves = 0;
         spawnManager.Clear();
         spawnManager.Destroy_Player();
     }
@@ -123,9 +133,26 @@ public class GameManager : MonoBehaviour
             onScoreChanged(Score);
         }
         //GamePlayPanel.DisplayScore(Score);
-        if( spawnManager.IsClear())
+        if ( spawnManager.IsClear())
         {
             GameOver(true);
+            if( current_waves == Waves.Length-1)
+            {
+                GameObject obj = GameObject.Find("/GameManager/Canvas/GameOverPanel/NextLevel");
+                if (obj != null)
+                {
+                    Debug.Log(obj.name);
+                    obj.SetActive(false);
+                }
+            }
         }
+    }
+
+    public void LevelUp()
+    {
+        current_waves += 1;
+        WavesData waves = Waves[current_waves];
+        spawnManager.StartBattle(waves);
+        Set_Game_State(GameState.GamePlay);
     }
 }

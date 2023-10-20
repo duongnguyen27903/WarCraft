@@ -21,6 +21,8 @@ namespace Section3
         private SpawnManager spawnManager;
         private GameManager gameManager;
         private AudioManager audioManager;
+        private float current_movespeed;
+        private float SpeedMultiplier;
 
         void Start()
         {
@@ -40,7 +42,7 @@ namespace Section3
             {
                 nextWayPoint = 0;
             }
-            transform.position = Vector3.MoveTowards(transform.position, WayPoint[nextWayPoint].position, MoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, WayPoint[nextWayPoint].position, current_movespeed * Time.deltaTime);
             if (transform.position == WayPoint[nextWayPoint].position)
             {
                 CurrentWayPointIndex = nextWayPoint;
@@ -63,19 +65,22 @@ namespace Section3
         {
             //ProjectileController projectile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
 
-            GameObject obj = ObjectPool.instance.EnemyFiring();
+            ProjectileController obj = ObjectPool.instance.EnemyFiring();
             if (obj != null)
             {
-                obj.transform.position = FiringPoint.position;
-                obj.SetActive(true);
+                obj.Adjust(SpeedMultiplier);
+                obj.gameObject.transform.position = FiringPoint.position;
+                obj.gameObject.SetActive(true);
             }
         }
-        public void Init(Transform[] way_point)
+        public void Init(Transform[] way_point, float speed_multiplier)
         {
             WayPoint = way_point;
+            SpeedMultiplier = speed_multiplier;
+            current_movespeed = MoveSpeed * speed_multiplier;
             active = true;
             transform.position = way_point[0].position;
-            TempCooldown = UnityEngine.Random.Range(MinFiringCooldown, MaxFiringCooldown);
+            TempCooldown = UnityEngine.Random.Range(MinFiringCooldown, MaxFiringCooldown)/speed_multiplier;
             current_hp = Hp;
         }
         public void Hit(int damage)

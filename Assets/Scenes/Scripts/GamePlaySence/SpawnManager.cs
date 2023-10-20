@@ -36,7 +36,7 @@ namespace Section3
         private ParticleFXPool particleFXPool;
         private bool IsSpawning;
         private PlayerController player;
-
+        private WavesData current_wave;
         public PlayerController Player => player;
 
         private void Awake()
@@ -57,8 +57,12 @@ namespace Section3
             objectPool = FindObjectOfType<ObjectPool>();
             particleFXPool = FindObjectOfType<ParticleFXPool>();
         }
-        public void StartBattle()
+        public void StartBattle(WavesData waves)
         {
+            current_wave = waves;
+            MinTotalEnemy = current_wave.minTotalEnemies;
+            MaxTotalEnemy = current_wave.maxTotalEnemies;
+            TotalGroups = current_wave.totalGroups;
             if( player == null)
                 player = Instantiate(player_prefab);
             player.transform.position = Vector2.zero;
@@ -73,6 +77,10 @@ namespace Section3
                 EnemyPath path = Path[UnityEngine.Random.Range(0, Path.Length)];
                 yield return StartCoroutine(IESpawnEnemies(totalEnemies, path));
                 //yield return new WaitForSeconds(3);
+                if( i<groups-1)
+                {
+                    yield return new WaitForSeconds(3f / current_wave.speedMultiplier);
+                }
             }
             IsSpawning = false;
         }
@@ -83,11 +91,11 @@ namespace Section3
             for (int i = 0; i < totalEnemies; i++)
             {
                 yield return new WaitUntil(() => active);
+                yield return new WaitForSeconds(SpawnInterval/current_wave.speedMultiplier);
                 //EnemyController enemy = Instantiate(EnemyPrefabs, transform);
                 EnemyController enemy = EnemyPool.instance.GetEnemiesPool(path.WayPoints[0].position, transform);
                 enemy.gameObject.SetActive(true);
-                enemy.Init(path.WayPoints);
-                yield return new WaitForSeconds(SpawnInterval);
+                enemy.Init(path.WayPoints,current_wave.speedMultiplier);
             }
         }
 
@@ -109,10 +117,6 @@ namespace Section3
             StopAllCoroutines();
         }
 
-        public void Create_Player()
-        {
-            
-        }
         public void Destroy_Player()
         {
             if( player != null)

@@ -11,6 +11,8 @@ namespace Section3
         [SerializeField] private int Damage;
 
         private float life_time;
+        private float SpeedMultiplier;
+        private float current_speed;
 
         void OnEnable()
         {
@@ -20,12 +22,25 @@ namespace Section3
             }
             else if( gameObject.layer == 9 )
             {
-                life_time = 10f;
+                life_time = 10f/SpeedMultiplier;
             }
         }
+
+        public void Adjust( float speed_multiplier)
+        {
+            SpeedMultiplier = speed_multiplier;
+            
+            if( gameObject.layer == 9)
+            {
+                current_speed = MoveSpeed * speed_multiplier;
+            }
+        }
+        
         void Update()
         {
-            transform.Translate(MoveSpeed * Time.deltaTime * Direction);
+            if( gameObject.layer == 9 )
+                transform.Translate(current_speed * Time.deltaTime * Direction);
+            else transform.Translate(MoveSpeed * Time.deltaTime * Direction);
             if (life_time <= 0)
             {
                 //Destroy(gameObject);

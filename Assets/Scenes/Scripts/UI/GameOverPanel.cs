@@ -1,3 +1,4 @@
+using Section3;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,12 +14,10 @@ public class GameOverPanel : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
     }
-
     public void DisplayHighScore(int score)
     {
         HighScore.text = $"HighScore : {score}";
     }
-
     public void BtnHome_Pressed()
     {
         gameManager.Btn_Home_Pressed();
@@ -31,5 +30,9 @@ public class GameOverPanel : MonoBehaviour
             Result.text = "WIN";
         }
         else Result.text = "LOSE";
+    }
+    public void LevelUp_Pressed()
+    {
+        GameManager.instance.LevelUp();
     }
 }
