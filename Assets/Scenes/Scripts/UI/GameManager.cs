@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         GamePlayPanel.gameObject.SetActive( game_state == GameState.GamePlay);
         GamePausePanel.gameObject.SetActive( game_state == GameState.GamePause);
         GameOverPanel.gameObject.SetActive(game_state == GameState.GameOver);
-        if ( game_state == GameState.GamePause)
+        if ( game_state == GameState.GamePause || game_state == GameState.GameOver)
         {
             Time.timeScale = 0;
         }
