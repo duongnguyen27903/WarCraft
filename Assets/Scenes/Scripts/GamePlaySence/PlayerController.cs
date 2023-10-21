@@ -56,6 +56,15 @@ namespace Section3
                 TempCooldown -= Time.deltaTime;
             }
         }
+
+        public void PowerUp()
+        {
+            current_hp = Hp;
+            if (onHpChanged != null)
+            {
+                onHpChanged(current_hp, Hp);
+            }
+        }
         private void Fire()
         {
             //ProjectileController projectile = Instantiate(ProjectTile, FiringPoint.position, Quaternion.identity, null);
@@ -99,15 +108,17 @@ namespace Section3
                 gameManager.Set_Game_State(GameManager.GameState.GameOver);
                 gameManager.GameOver(false);
                 Time.timeScale = 0;
-                if( GameManager.instance.Current_Wave == GameManager.instance.Get_Waves.Length-1 )
+                
+                GameObject obj = GameObject.Find("/GameManager/Canvas/GameOverPanel/NextLevel");
+                if (obj != null)
+                {
+                    Debug.Log(obj.name);
+                    obj.SetActive(false);
+                }
+                if ( GameManager.instance.Current_Wave == GameManager.instance.Get_Waves.Length-1 )
                 {
                     //using Find to search gameObject with their name and path by level
-                    GameObject obj = GameObject.Find("/GameManager/Canvas/GameOverPanel/NextLevel");
-                    if (obj != null)
-                    {
-                        Debug.Log(obj.name);
-                        obj.SetActive(false);
-                    }
+                    
                 }
             }
         }

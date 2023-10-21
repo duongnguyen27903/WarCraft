@@ -44,5 +44,8 @@ public class GamePlayPanel : MonoBehaviour
     {
         HpValue.fillAmount = current_hp * 1f / max_hp ;
     }
-
+    public void PowerUp_Pressed()
+    {
+        GameManager.instance.PowerUp();
+    }
 }

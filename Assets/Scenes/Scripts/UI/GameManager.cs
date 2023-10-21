@@ -155,4 +155,9 @@ public class GameManager : MonoBehaviour
         spawnManager.StartBattle(waves);
         Set_Game_State(GameState.GamePlay);
     }
+
+    public void PowerUp()
+    {
+        SpawnManager.instance.Player.PowerUp();
+    }
 }
