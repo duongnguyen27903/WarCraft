@@ -180,7 +180,6 @@ namespace Section3
                 GameObject expolsionFX = ParticleFXPool.instance.GetExplosionFX();
                 expolsionFX.transform.position = gameObject.transform.position;
                 expolsionFX.SetActive(true);
-                Destroy(gameObject);
                 gameManager.Set_Game_State(GameManager.GameState.GameOver);
                 gameManager.GameOver(false);
                 Time.timeScale = 0;
@@ -196,6 +195,7 @@ namespace Section3
                     //using Find to search gameObject with their name and path by level
                     
                 }
+                Destroy(gameObject);
             }
         }
     }

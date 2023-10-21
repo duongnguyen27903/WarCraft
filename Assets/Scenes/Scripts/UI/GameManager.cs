@@ -93,6 +93,12 @@ public class GameManager : MonoBehaviour
     {
         current_waves = 0;
         WavesData waves = Waves[current_waves];
+        GameObject obj = GameObject.Find("/GameManager/Canvas/GameOverPanel/NextLevel");
+        if (obj != null && obj.activeSelf == false)
+        {
+            Debug.Log(obj.name);
+            obj.SetActive(true);
+        }
         spawnManager.StartBattle(waves);
         Set_Game_State(GameState.GamePlay);
         
@@ -108,7 +114,6 @@ public class GameManager : MonoBehaviour
     public void Btn_Home_Pressed()
     {
         Set_Game_State(GameState.Home);
-        current_waves = 0;
         spawnManager.Clear();
         spawnManager.Destroy_Player();
     }
