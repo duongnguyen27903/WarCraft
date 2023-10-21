@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae3ead72db19e3f4298cedb823704fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player_prefab: {fileID: 8167475391791079829, guid: 066ef03aec0fb9f4a82e28891cb7e2d0, type: 3}
   active: 0
   MinTotalEnemy: 4
   MaxTotalEnemy: 6

@@ -106,6 +106,7 @@ MonoBehaviour:
   FiringPoint: {fileID: 29875111271548368}
   FiringCooldown: 0.1
   Hp: 10
+  UseNewInputSystem: 1
 --- !u!58 &278115462227036836
 CircleCollider2D:
   m_ObjectHideFlags: 0

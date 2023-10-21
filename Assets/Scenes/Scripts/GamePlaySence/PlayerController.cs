@@ -14,13 +14,70 @@ namespace Section3
         [SerializeField] private Transform FiringPoint;
         [SerializeField] private float FiringCooldown;
         [SerializeField] private int Hp;
+        [SerializeField] private bool UseNewInputSystem;
 
         private int current_hp;
         private float TempCooldown;
 
         private GameManager gameManager;
         private AudioManager audioManager;
-        
+
+        private PlayerInput Player_Input;
+        private Vector2 MovementInputValue;
+        private bool AttackInputValue;
+
+        private void OnEnable()
+        {
+            if( Player_Input == null)
+            {
+                Player_Input = new PlayerInput();
+                Player_Input.Player.Movement.started += OnMovement ;
+                Player_Input.Player.Movement.performed += OnMovement;
+                Player_Input.Player.Movement.canceled += OnMovement;
+                Player_Input.Player.Attack.started += OnAttack;
+                Player_Input.Player.Attack.performed += OnAttack;
+                Player_Input.Player.Attack.canceled += OnAttack;
+                Player_Input.Enable();
+            }
+        }
+
+        private void OnAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            if( context.started)
+            {
+                AttackInputValue = true;
+            }
+            else if( context.performed)
+            {
+                AttackInputValue = true;
+            }
+            else if( context.canceled)
+            {
+                AttackInputValue = false;
+            }
+        }
+
+        private void OnMovement(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                MovementInputValue = context.ReadValue<Vector2>();
+            }
+            else if (context.performed)
+            {
+                MovementInputValue = context.ReadValue<Vector2>();
+            }
+            else if (context.canceled)
+            {
+                MovementInputValue = Vector2.zero;
+            }
+        }
+
+        private void OnDisable()
+        {
+            Player_Input.Disable();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -40,21 +97,40 @@ namespace Section3
             {
                 return;
             }
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            Vector2 direction = new(horizontal, vertical);
-            transform.Translate(MoveSpeed * Time.deltaTime * direction);
-
-            if (Input.GetKey(KeyCode.Space))
+            Vector2 direction = Vector2.zero;
+            if ( !UseNewInputSystem )
             {
-                if (TempCooldown <= 0)
+                float horizontal = Input.GetAxis("Horizontal");
+                float vertical = Input.GetAxis("Vertical");
+                direction = new Vector2(horizontal, vertical);
+
+                if (Input.GetKey(KeyCode.Space))
                 {
-                    Fire();
-                    audioManager.PlayLaserSFX();
-                    TempCooldown = FiringCooldown;
+                    if (TempCooldown <= 0)
+                    {
+                        Fire();
+                        audioManager.PlayLaserSFX();
+                        TempCooldown = FiringCooldown;
+                    }
                 }
-                TempCooldown -= Time.deltaTime;
             }
+            else
+            {
+                direction = MovementInputValue;
+
+                if( AttackInputValue == true)
+                {
+                    if (TempCooldown <= 0)
+                    {
+                        Fire();
+                        audioManager.PlayLaserSFX();
+                        TempCooldown = FiringCooldown;
+                    }
+                }
+            }
+            
+            transform.Translate(MoveSpeed * Time.deltaTime * direction);
+            TempCooldown -= Time.deltaTime;
         }
 
         public void PowerUp()
